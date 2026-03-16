@@ -1,0 +1,47 @@
+{
+  "name": "dead-files",
+  "version": "0.1.1",
+  "description": "Find unused files in your codebase.",
+  "type": "module",
+  "bin": {
+    "dead-files": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "unused-files",
+    "dead-code",
+    "codebase-cleanup",
+    "cli",
+    "lint",
+    "cleanup",
+    "orphan-files",
+    "static-analysis"
+  ],
+  "author": "Jaivik Goswami",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "fast-glob": "^3.3.2",
+    "ignore": "^5.3.0",
+    "ora": "^8.0.1",
+    "p-limit": "^5.0.0"
+  }
+}
