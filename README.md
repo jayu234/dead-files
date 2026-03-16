@@ -56,7 +56,7 @@ Options:
   --ignore <patterns>    Additional glob patterns to ignore (comma-separated)
   --no-gitignore         Disable .gitignore respect
   -q, --quiet            Only print file paths, no summary
-  -v, --version          Print version
+  -V, --version          Print version
   -h, --help             Print help
 ```
 
@@ -128,7 +128,7 @@ These files are **never** marked as unused (they're entry points):
 
 - `src/index.*`, `src/main.*`, `src/App.*`
 - `setupTests.*`, `vitest.setup.*`
-- `public/`**, `scripts/**`
+- `public/`**, `scripts/`**
 - Test files (`*.test.ts`, `*.spec.ts`, `__tests__/**`)
 - Storybook stories (`*.stories.tsx`)
 

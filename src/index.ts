@@ -10,6 +10,7 @@ import { createResolver } from "./resolver.js";
 import { buildDependencyGraph, findDeadFiles } from "./graph.js";
 import { detectEntryPoints, isEntryPoint } from "./entrypoints.js";
 import { formatOutput, printError } from "./output.js";
+import { runInteractiveDelete } from "./interactive.js";
 
 interface CliOptions {
   ext?: string;
@@ -19,6 +20,7 @@ interface CliOptions {
   ignore?: string;
   gitignore?: boolean;
   quiet?: boolean;
+  interactive?: boolean;
 }
 
 async function getVersion(): Promise<string> {
@@ -50,6 +52,7 @@ async function main(): Promise<void> {
     .option("--ignore <patterns>", "Additional glob patterns to ignore (comma-separated)")
     .option("--no-gitignore", "Disable .gitignore respect")
     .option("-q, --quiet", "Only print file paths, no summary")
+    .option("-i, --interactive", "Interactively select files to delete")
     .action(async (directory: string, options: CliOptions) => {
       await run(directory, options);
     });
@@ -58,6 +61,12 @@ async function main(): Promise<void> {
 }
 
 async function run(directory: string, options: CliOptions): Promise<void> {
+  // Mutually exclusive flags check
+  if (options.json && options.interactive) {
+    printError("--json and --interactive are mutually exclusive.");
+    process.exit(1);
+  }
+
   const startTime = performance.now();
   const rootDir = resolve(directory);
 
@@ -145,6 +154,11 @@ async function run(directory: string, options: CliOptions): Promise<void> {
     // Step 6: Output results
     const endTime = performance.now();
     const durationMs = endTime - startTime;
+
+    if (options.interactive) {
+      await runInteractiveDelete(deadFiles);
+      return;
+    }
 
     const output = formatOutput(deadFiles, fileCount, directory, durationMs, {
       json: options.json,
