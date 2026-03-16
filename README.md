@@ -24,6 +24,9 @@ dead-files
 # Scan a specific directory
 dead-files ./src
 
+# Interactively select and delete unused files
+dead-files --interactive
+
 # Output as JSON (useful for CI/scripting)
 dead-files --json
 
@@ -40,6 +43,33 @@ dead-files -e ts,tsx
 dead-files --ignore "**/__mocks__/**,**/fixtures/**"
 ```
 
+## Interactive Delete
+
+Run with `-i` or `--interactive` to pick which unused files to delete:
+
+```bash
+dead-files -i
+```
+
+It shows a checkbox list of all unused files. Select what you want to delete, confirm once, and they're gone.
+
+```
+  Space to toggle, A to select all, I to invert, Enter to confirm
+
+? Select files to delete:
+ ◯ src/components/OldButton.tsx
+ ◯ src/utils/deprecated-helper.ts
+ ◯ src/styles/legacy.css
+
+? Delete 2 selected files? (y/N)
+
+Deleted:
+  src/components/OldButton.tsx
+  src/utils/deprecated-helper.ts
+```
+
+Note: `--interactive` and `--json` cannot be used together.
+
 ## CLI Options
 
 ```
@@ -49,6 +79,7 @@ Arguments:
   directory              Root directory to scan (default: current directory)
 
 Options:
+  -i, --interactive      Interactively select and delete unused files
   -e, --ext <exts>       Comma-separated extensions to include
   --include-assets       Also report unused image/font/svg files
   --json                 Output as JSON
