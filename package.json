@@ -4,7 +4,7 @@
   "description": "Find unused files in your codebase.",
   "type": "module",
   "bin": {
-    "dead-files": "./dist/index.js"
+    "dead-files": "dist/index.js"
   },
   "files": [
     "dist",
